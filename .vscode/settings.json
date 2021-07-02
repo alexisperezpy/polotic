@@ -1,0 +1,11 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "polotic",
+            "group": "politic",
+            "database": "${workspaceFolder:config}/db.sqlite3"
+        }
+    ]
+}

@@ -1,0 +1,22 @@
+{% extends 'layouts/tienda.html' %} {% block content %}
+<br>
+<div class="container">
+    <div class="col-6 col-sm-5 offset-md-3 mx-auto bg-dark text-white">
+        <div class="card-header">
+            <h3 class="text-center my-2">Registro de Usuarios</h3>
+            {% load crispy_forms_tags %}
+            <div class="card-body py-2">
+                <form method="post" action="">
+                    {% csrf_token %} 
+
+                    {{ form | crispy }}
+
+                    <div class="text-center py-3">
+                        <button class="btn btn-danger" type='submit'>Registrarse</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

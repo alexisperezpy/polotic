@@ -1,0 +1,24 @@
+{% extends 'layouts/tienda.html' %} {% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-8 mx-auto animate__animated animate__backInRight animate__delay-0.5s mt-3">
+            {{ mensaje }} {% load crispy_forms_tags %}
+            <div class="card p-2">
+                <h3 class="animate__animated animate__bounceInDown animate__delay-1s text-center my-2">MODIFICAR PRODUCTO</h3>
+                <div class="card body p-2">
+                    <form action="" method="post" enctrype="multipart/form-data">
+                        {% csrf_token %} {{ form | crispy }}
+                        <div class="d-flex justify-content-end">
+                            <a href="/listarproductos" class="btn btn-secondary mt-2 mx-2" button ">Cancelar</a>
+                            <button type="submit " class="btn btn-danger mt-2 mx-2 " button ">Modificar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+{% endblock %}

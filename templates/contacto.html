@@ -1,0 +1,27 @@
+{% extends 'layouts/tienda.html' %} {% block content %}
+
+<div class="container-fluid mt-4">
+    <h3 class="animate__animated animate__bounceInDown animate__delay-0.1s text-center my-4">CONTACTO</h3>
+
+    <div class="row my-6">
+        <div class="col-md-6 mx-auto animate__animated animate__bounceInUp animate__delay-0.2s">
+            {{ mensaje }} {% load crispy_forms_tags %}
+            <div>
+                <form method="post">
+                    {% csrf_token %} {{ form | crispy }}
+                    <div class="d-flex justify-content-center">
+                        <button type="reset" class="btn btn-secondary mt-1 mx-2" button ">Cancelar</button>
+                        <button type="submit " class="btn btn-danger mt-1 " button ">Enviar</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        <div class="col-md-6 text-center mx-auto my-auto rounded animate__animated animate__backInRight animate__delay-0.2s">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3607.758809145989!2d-57.55628152836994!3d-25.2786977686035!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x945da8a71743dd1f%3A0x8a4f04a444d5c487!2sAvenida%20Aviadores%20del%20Chaco%2C%20Asunci%C3%B3n!5e0!3m2!1ses-419!2spy!4v1624481992242!5m2!1ses-419!2spy "
+                width="500 " height="400 " style="border:0; " allowfullscreen=" " loading="lazy "></iframe>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

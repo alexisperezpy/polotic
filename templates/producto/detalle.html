@@ -1,0 +1,65 @@
+{% extends "layouts/tienda.html" %} {% block content %}
+
+<!-- Product section-->
+<section class="py-5">
+    <div class="container px-4 px-lg-5 my-3">
+        <div class="row gx-4 gx-lg-5 align-items-center">
+             {% if producto.imagen %}
+                <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{ producto.imagen.url }}" /></div>
+            {% else %}
+                <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." /></div>
+            {% endif %}
+            <div class="col-md-6">
+                <div class="small mb-1">Código: {{ producto.id }}</div>
+                <h1 class="display-5 fw-bolder">{{ producto.nombre }}</h1>
+                <div class="fs-5 mb-5">
+                    <!-- <span class="text-decoration-line-through">Gs. {{ producto.precio }}</span> -->
+                    <span>Gs. {{ producto.precio }} </span>
+                </div>
+                <p class="lead">{{ producto.descripcion }}</p>
+                <div class="d-flex">
+                    <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" />
+                    <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                                <i class="bi-cart-fill me-1"></i>
+                                Agregar al Carrito
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Related items section-->  
+<section class="py-3 bg-light">
+    <div class="container px-3 px-lg-5 mt-3">
+        <h2 class="fw-bolder mb-4 text-center">Productos relacionados</h2>
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            {% for product in productosRelacionados %}
+            <div class="col mb-5">
+                    <div class="card h-100">
+                        {% if producto.imagen %}
+                            <!-- Product image-->
+                            <img class="card-img-top" src="{{ producto.imagen.url }}"/>
+                        {% else %}
+                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="producto" />
+                        {% endif %}
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">{{ product.nombre }}</h5>
+                                <!-- Product price-->
+                                Gs. {{ product.precio }}
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Al Carrito</a></div>
+                        </div>
+                    </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}
