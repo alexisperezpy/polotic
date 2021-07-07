@@ -1,68 +1,75 @@
 {% extends "layouts/tienda.html" %} {% load static %} {% block content %}
+<div class="min-vh-100 d-flex flex-colum pb-3">
+    <div class="container">
 
-<!-- Header-->
-<header class="bg-dark py-3 rounded-bottom animate__animated animate__zoomIn animate__delay-0.1s">
-    <div class="text-center text-white ">
-        <h1 class="display-4 fw-bolder animate__animated animate__bounceInDown animate__delay-0.2s">Estamos con increibles Ofertas</h1>
-        <h4 class="lead fw-normal mb-0 animate__animated animate__rollIn animate__delay-0.8s">hasta 45% off!</h4>
-    </div>
-</header>
+        <!-- Header-->
+        <header class="bg-dark py-3 rounded-bottom animate__animated animate__zoomIn animate__delay-0.3s">
+            <div class="text-center text-white ">
+                <h1 class="display-4 fw-bolder animate__animated animate__bounceInDown animate__delay-0.4s">Estamos con increibles Ofertas</h1>
+                <h4 class="lead fw-normal mb-0 animate__animated animate__rollIn animate__delay-0.7s">hasta 45% off!</h4>
+            </div>
+        </header>
 
-<!-- Section-->
-
-<div class="pt-3">
-    <form class="d-flex d-md-inlne-block form-inline  justify-content-end" method="POST" action="">
-         {% csrf_token %}
-        <div class="input-group">
-            <input type="text" class="form-control bg-light border-1 small text-center" name="buscador" placeholder="buscar..." value="{{ request.POST.buscador }}">
-            <div class="input-group-append">
-                <button class="btn btn-dark mx-1" type="submit"> 
+        <!-- Section-->
+        <div class="pt-3">
+            <form class="d-flex d-md-inlne-block form-inline justify-content-end" method="POST" action="">
+                {% csrf_token %}
+                <div class="input-group">
+                    <input type="text" class="form-control bg-light border-1 small text-center" name="buscador" placeholder="buscar..." value="{{ request.POST.buscador }}">
+                    <div class="input-group-append">
+                        <button class="btn btn-danger mx-1" type="submit"> 
                     <i class="bi bi-search bi-sm"></i>
                 </button>
-            </div>
-        </div>
-    </form>
-</div>
-
-<section class="py-3">
-    <div class="container px-4 px-lg-5 mt-2 animate__animated animate__fadeIn animate__delay-0.3s">
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            {% for producto in entity %}
-            <div class="col mb-4">
-                <div class="card h-100 text-center">
-                    <!-- Product image-->
-                    {% if producto.imagen %}
-                    <img class="mx-auto d-block img-fluid" src="{{ producto.imagen.url }}" alt="producto" width="60px%" /> {% else %}
-                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="sinImagen" /> {% endif %}
-                    <!-- Product details-->
-                    {% load humanize %}
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                            <!-- Product name-->
-                            <h5 class="fw-bolder">{{ producto.nombre }}</h5>
-                            <!-- Product price-->
-                            Gs. {{ producto.precio | intcomma }}
-                        </div>
-                    </div>
-                    <!-- Product actions-->
-                    <div class="card-footer p-2 pt-2 border-top-0 bg-transparent">
-                        <div class="text-center">
-                            <a class="btn btn-dark mt-auto" href="{% url 'tienda:detalleproducto' producto.id %}">Ver detalle</a>
-                            <a class="btn btn-danger mt-2" type="button">
-                                <i class="bi-cart-fill me-1"></i>
-                                Agregar al Carrito
-                            </a>
-                        </div>
                     </div>
                 </div>
+            </form>
+        </div>
+
+        <section class="py-2">
+            <div class="container px-4 px-lg-5 mt-2 animate__animated animate__fadeIn animate__delay-0.3s">
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                    {% if entity %} {% for producto in entity %}
+                    <div class="col my-3">
+                        <div class="card h-100 text-center py-3">
+                            <!-- Product image-->
+                            {% if producto.imagen %}
+                            <img class="mx-auto d-block img-fluid" src="{{ producto.imagen.url }}" alt="producto" width="60px%" /> {% else %}
+                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="sinImagen" /> {% endif %}
+                            <!-- Product details-->
+                            {% load humanize %}
+                            <div class="card-body p-3">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder">{{ producto.nombre }}</h5>
+                                    <!-- Product price-->
+                                    Gs. {{ producto.precio | intcomma }}
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-2 pt-2 border-top-0 bg-transparent">
+                                <div class="text-center">
+                                    <a class="btn btn-dark mt-auto" href="{% url 'tienda:detalleproducto' producto.id %}">Ver detalle</a> {% if user.is_authenticated%}
+                                    <a class="btn btn-danger mt-2" type="button">
+                                        <i class="bi-cart-fill me-1"></i> Agregar al Carrito
+                                    </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %} {% else %}
+                    <div class="text-center text-warning">
+                        <h3> No se encontraron Productos!!</h3>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div>
+                    {% include 'paginator.html' %}
+                </div>
             </div>
-            {% endfor %}
-        </div>
-        <div>
-            {% include 'paginator.html' %}
-        </div>
+
+        </section>
     </div>
-
-</section>
-
+</div>
 {% endblock %}

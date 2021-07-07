@@ -20,7 +20,12 @@ urlpatterns = [
     path('editcategoria/<id>/', views.modificarCategoria, name='editcategoria'),
     path('deleteCategoria/<id>/', views.deleteCategoria, name='deleteCategoria'),
     path('contacto/', views.contacto, name='contacto'),
+    path('garantia/', views.garantia, name='garantia'),
+    path('devoluciones/', views.devoluciones, name='devoluciones'),
     # paths de autenticacion
     path('registrar/', views.registrar, name='registrar'),
     path('login/', LoginView.as_view(template_name='auth/login.html'), name='login'),
+    #Paths del carrito
+    path('cart/', views.cart, name="cart"),
+    path('checkout/', views.checkout, name="checkout"),
 ]

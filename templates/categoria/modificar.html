@@ -1,25 +1,25 @@
 {% extends 'layouts/tienda.html' %} {% block content %}
+<div class="min-vh-100 d-flex flex-colum py-4">
+    <div class="container-fluid">
+        <h3 class="animate__animated animate__bounceInDown animate__delay-4s text-center my-3">MODIFICAR CATEGORIA</h3>
 
-<div class="container-fluid">
-    <h3 class="animate__animated animate__bounceInDown animate__delay-1s text-center my-3">MODIFICAR CATEGORIA</h3>
-
-    <div class="row">
-        <div class="col-sm-6 mx-auto animate__animated animate__bounceInUp animate__delay-0.5s">
-            {{ mensaje }} {% load crispy_forms_tags %}
-            <div class="card">
-                <div class="card body p-2">
-                    <form action="" method="post">
-                        {% csrf_token %} {{ form | crispy }}
-                        <div class="d-flex justify-content-end">
-                            <a href="/categorias" class="btn btn-secondary mt-2 mx-2">Cancelar</a>
-                            <button type="submit" class="btn btn-danger mt-2 mx-2">Modificar</button>
-                        </div>
-                    </form>
+        <div class="row">
+            <div class="col-sm-6 mx-auto animate__animated animate__bounceInUp animate__delay-0.5s">
+                {{ mensaje }} {% load crispy_forms_tags %}
+                <div class="card">
+                    <div class="card body p-2">
+                        <form action="" method="post">
+                            {% csrf_token %} {{ form | crispy }}
+                            <div class="d-flex justify-content-end">
+                                <a href="/categorias" class="btn btn-secondary mt-2 mx-2">Cancelar</a>
+                                <button type="submit" class="btn btn-danger mt-2 mx-2">Modificar</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
 
+    </div>
 </div>
 {% endblock %}

@@ -1,54 +1,69 @@
 {% extends 'layouts/tienda.html' %} {% block content %}
-<br>
-<div class="container-fluid">
-    <div class="row justify-content-center">
-        <div class="col-sm-10 animate__animated animate__backInRight animate__delay-0.1s">
-            <div class="card">
-                <div class="card-header text-center">
-                    {{ title }}
-                </div>
-                <div class="card-body">
-                    <div class="d-flex justify-content-end mb-2 mx-2">
-                        <a href="/addproducto" class="btn btn-dark btn-sm pull-right" type="submit">
-                            Nuevo Producto
-                        </a>
+<div class="min-vh-100 d-flex flex-colum py-4">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 col-md-6 col-sm-4 animate__animated animate__backInRight animate__delay-0.4s">
+                <div class="card">
+                    <div class="card-header text-center font-weight-bold">
+                        {{ title }}
                     </div>
-                    <table class="table table-condensed table-responsive">
-                        <thead class="thead-dark text-center ">
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">descripcion</th>
-                                <th scope="col">precio</th>
-                                <th scope="col">stock</th>
-                                <th scope="col">categoria</th>
-                                <th colspan="2">Opciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% load bootstrap_icons %} {% for producto in entity %}
-                            <tr>
-                                <td>{{ producto.id }}</td>
-                                <td>{{ producto.descripcion }}</td>
-                                <td>{{ producto.precio }}</td>
-                                <td>{{ producto.stock }}</td>
-                                <td>{{ producto.categoria }}</td>
-                                <td colspan="2">
-                                    <a class="btn btn-secondary btn-sm" href="{% url 'tienda:editproducto' producto.id %}" type="button"><i class="bi bi-pencil-square"></i></a>
-                                    <a class="btn btn-danger btn-sm" href="{% url 'tienda:deleteProducto' producto.id %}" type="button"><i class="bi bi-trash-fill"></i></a>
-                                </td>
-                            </tr>
-                            {% endfor %}
+                    <div class="card-body table-responsive align-items-center">
+                        <!-- inline-block justify-content-end mb-2 mx-2 -->
+                        <div class="d-flex mb-2">
+                            <a href="/addproducto" class="d-flex inline-block mx-auto btn btn-dark btn-sm" type="submit">
+                                Nuevo Producto
+                            </a>
 
-                        </tbody>
-                    </table>
-                    <div>
-                        {% include 'paginator.html' %}
+                            <form class="d-flex mx-auto d-sm-inlne-block form-inline" method="POST" action="">
+                                {% csrf_token %}
+                                <div class="input-group">
+                                    <input type="text" class="form-control bg-light border-1 small text-center" name="buscador" placeholder="buscar..." value="{{ request.POST.buscador }}">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-danger mx-1" type="submit"> 
+                                                <i class="bi bi-search bi-sm"></i>
+                                            </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <table class="table table-condensed">
+                            <thead class="thead-dark text-center ">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">descripcion</th>
+                                    <th scope="col">precio</th>
+                                    <th scope="col">stock</th>
+                                    <th scope="col">categoria</th>
+                                    <th colspan="2">Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% load bootstrap_icons %} {% if entity %} {% for producto in entity %}
+                                <tr>
+                                    <td>{{ producto.id }}</td>
+                                    <td>{{ producto.nombre }}</td>
+                                    <td>{{ producto.precio }}</td>
+                                    <td>{{ producto.stock }}</td>
+                                    <td>{{ producto.categoria }}</td>
+                                    <td colspan="2">
+                                        <a class="btn btn-secondary btn-sm" href="{% url 'tienda:editproducto' producto.id %}" type="button"><i class="bi bi-pencil-square"></i></a>
+                                        <a class="btn btn-danger btn-sm" href="{% url 'tienda:deleteProducto' producto.id %}" type="button"><i class="bi bi-trash-fill"></i></a>
+                                    </td>
+                                </tr>
+                                {% endfor %} {% else %}
+                                <div class="text-center text-warning">
+                                    <h3> No se encontraron Productos!!</h3>
+                                </div>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                        <div>
+                            {% include 'paginator.html' %}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
 </div>
 {% endblock %}

@@ -1,26 +1,31 @@
 {% extends 'layouts/tienda.html' %}{% load static %} {% block content %}
 
-<div class="container-fluid my-4">
-    <h3 class="animate__animated animate__bounceInDown animate__delay-0.2s text-center py-4">JAGUARETE KAA S.A.</h3>
-    <div class="row py-auto">
-        <div class="col-lg-8">
-            <p class="animate__animated animate__backInRight animate__delay-0.3s text-justify">
-                Somos una empresa joven, enfocada en el cliente, con servicios innovadores de tecnología a nivel nacional e internacional. Jaguarete Ka'a surge con la idea de ofrecer productos útiles y novedosos en internet al público en general. Queremos ayudarte a
-                potenciar el crecimiento tecnológico de tu empresa, cuando tu empresa crece, tus clientes crecen. Desde 2015 promovemos y generamos servicios de plataformas y contenidos digitales, 6 años creciendo y alcanzando nuevas metas con nuestros
-                clientes.
-            </p>
-            <p class="animate__animated animate__backInRight animate__delay-0.3s text-justify">No existe un negocio de e-commerce que sea igual a otro en Paraguay, por lo que la oportunidad estaba latente y era clave aprovecharla en el tiempo indicado. Con la masificación del acceso a internet y la globalización de los mercados, el
-                e-commerce es la alternativa de compras del futuro. En Paraguay el rubro también está creciendo actualmente por lo que es importante apostar por el crecimiento económico y tecnológico del sector.</p>
-        </div>
+<div class="min-vh-100 d-flex flex-colum py-2">
+    <div class="container">
+        <h3 class="animate__animated animate__bounceInDown animate__delay-0.3s text-center py-4">JAGUARETE KAA S.A.</h3>
+        <div class="row py-auto">
+            <div class="col-lg-8">
+                <p class="animate__animated animate__backInRight animate__delay-0.3s text-justify">
+                    Somos una empresa joven, enfocada en el cliente, con servicios innovadores de tecnología a nivel nacional e internacional. Jaguarete Ka'a surge con la idea de ofrecer productos útiles y novedosos en internet al público en general. Queremos ayudarte a
+                    potenciar el crecimiento tecnológico de tu empresa, cuando tu empresa crece, tus clientes crecen. Desde 2015 promovemos y generamos servicios de plataformas y contenidos digitales, 6 años creciendo y alcanzando nuevas metas con nuestros
+                    clientes.
+                </p>
+                <p class="animate__animated animate__backInRight animate__delay-0.3s text-justify">
+                    No existe un negocio de e-commerce que sea igual a otro en Paraguay, por lo que la oportunidad estaba latente y era clave aprovecharla en el tiempo indicado. Con la masificación del acceso a internet y la globalización de los mercados, el e-commerce es
+                    la alternativa de compras del futuro. En Paraguay el rubro también está creciendo actualmente por lo que es importante apostar por el crecimiento económico y tecnológico del sector.
+                </p>
+            </div>
 
-        <div class="col-lg-4 animate__animated animate__bounceInUp animate__delay-0.5s ">
-            <img class="img-fluid ml-auto" src="{% static 'assets/team.jpg' %}" alt="team">
-        </div>
+            <div class="col-lg-4 animate__animated animate__bounceInUp animate__delay-0.4s ">
+                <img class="img-fluid ml-auto" src="{% static 'assets/team.jpg' %}" alt="team">
+            </div>
 
-    </div>
-    <div class="row animate__animated animate__bounceInUp animate__delay-1s">
-        <p class="mb-1">Teléfono: +595 981 962 250 | +595 981 550 695</p>
-        <p> Asunción, Paraguay</p>
+        </div>
+        <div class="row animate__animated animate__bounceInUp animate__delay-1s">
+            <p class="mb-1">Teléfono: +595 981 962 250 | +595 981 550 695</p>
+            <p> Asunción, Paraguay</p>
+        </div>
     </div>
 </div>
+
 {% endblock %}

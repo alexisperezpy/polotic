@@ -4,6 +4,7 @@ from .models import *
 from django.core.paginator import Paginator
 from django.http import Http404
 from django.contrib.auth import logout, login, authenticate
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.views.generic import ListView, CreateView
@@ -12,7 +13,6 @@ from .forms import ConctactoForm, ProductoForm, CategoriaForm, CustomUserCreatio
 
 
 # Create your views here.
-
 def index(request):
     busqueda = request.POST.get("buscador")
     product_list = Productos.objects.order_by('nombre')
@@ -35,10 +35,18 @@ def index(request):
     }
     return render(request, 'index.html', data)
 
+
 # Listar productos por categoria
 def productoxCategoria(request, id):
+    busqueda = request.POST.get("buscador")
     lista_productos = Productos.objects.filter(categoria = id)
     
+    if busqueda:
+        lista_productos = Productos.objects.filter(
+            Q(nombre__icontains=busqueda) |
+            Q(descripcion__icontains=busqueda)
+        ).distinct()
+
     data = {'entity': lista_productos}
     return render(request, 'index.html', data)
 
@@ -46,13 +54,14 @@ def productoxCategoria(request, id):
 # views productos
 def detalleProducto(request, id):
     product = get_object_or_404(Productos, id=id)
-    otrosProductos = Productos.objects.filter(categoria = product.categoria)
+    otrosProductos = Productos.objects.filter(categoria=product.categoria)
     data = {
         'producto': product,
         'productosRelacionados': otrosProductos
     }
     return render(request, 'producto/detalle.html', data)
 
+@login_required(login_url='/login')
 def addProducto(request):
     data = {
         'form' : ProductoForm()
@@ -70,9 +79,16 @@ def addProducto(request):
     return render(request, 'producto/agregar.html', data)
 
 
+@login_required(login_url='/login')
 def listarProductos(request):
-    lista_productos = Productos.objects.all().order_by('nombre')
+    busqueda = request.POST.get("buscador")
+    lista_productos = Productos.objects.order_by('nombre')
     page = request.GET.get('page', 1)
+    if busqueda:
+        lista_productos = Productos.objects.filter(
+            Q(nombre__icontains = busqueda) |
+            Q(descripcion__icontains = busqueda)
+        ).distinct()
 
     try:
         paginator = Paginator(lista_productos, 6)
@@ -87,6 +103,7 @@ def listarProductos(request):
     return render(request, 'producto/listar.html', data)
 
 
+@login_required(login_url='/login')
 def editarProducto(request, id):
     producto = get_object_or_404(Productos, id=id)
     data = {
@@ -102,6 +119,8 @@ def editarProducto(request, id):
         data["form"] = formulario
     return render(request, 'producto/modificar.html', data)
 
+
+@login_required(login_url='/login')
 def deleteProducto(request, id):
     producto = get_object_or_404(Productos, id=id)
     producto.delete()
@@ -111,7 +130,15 @@ def deleteProducto(request, id):
 def nosotros(request):
     return render(request, 'nosotros.html')
 
+def garantia(request):
+    return render(request, 'garantia.html')
+
+def devoluciones(request):
+    return render(request, 'devoluciones.html')
+
+
 # Views categorias
+@login_required(login_url='/login')
 def listCategorias(request):
     lista_categorias = Categorias.objects.all().order_by('nombre')
     page = request.GET.get('page', 1)
@@ -129,6 +156,8 @@ def listCategorias(request):
 
     return render(request,'categorias.html', data)
 
+
+@login_required(login_url='/login')
 def addCategoria(request):
     data = {
         'form': CategoriaForm()
@@ -144,6 +173,8 @@ def addCategoria(request):
             data["form"] = formulario
     return render(request, 'categoria/agregar.html', data)
 
+
+@login_required(login_url='/login')
 def modificarCategoria(request, id):
     categoria = get_object_or_404(Categorias, id=id)
 
@@ -161,13 +192,13 @@ def modificarCategoria(request, id):
 
     return render(request, 'categoria/modificar.html', data)
 
+
+@login_required(login_url='/login')
 def deleteCategoria(request, id):
     categoria = get_object_or_404(Categorias, id=id)
     categoria.delete()
     messages.success(request, "Registro eliminado correctamente")
     return redirect(to="/categorias")
-
-
 
 def contacto(request):
     data = {
@@ -201,3 +232,22 @@ def registrar(request):
             data['form'] = formulario
     
     return render(request, 'auth/registrar.html', data)
+
+
+# Acciones carrito
+def cart(request):
+    customer = request.user
+    if request.user.is_authenticated:
+        order, created = Order.objects.get_or_create(cliente=customer, completado=False)
+        items = order.orderitem_set.all()
+    else:
+        items = []
+        order = {'get_total_order':0,
+                 'get_cart_items':0}
+    data={'items':items,
+            'order':order}
+    return render(request, 'carrito/cart.html',data)
+
+def checkout(request):
+    data={}
+    return render(request, 'carrito/checkout.html',data)

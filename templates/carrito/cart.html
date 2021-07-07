@@ -1,0 +1,67 @@
+{% extends 'layouts/tienda.html' %} {% block content %}
+<div class="min-vh-100 d-flex flex-colum py-4">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-9 col-md-8 col-sm-6 mx-auto animate__animated animate__bounceInUp animate__delay-0.3s">
+
+                <div class="card">
+                    <div class="card-header text-center">
+                        <strong>CARRITO</strong>
+                    </div>
+                    <div class="card body p-2">
+
+                        <h6>Items: <strong> 
+                            {{ order.get_cart_items }} 
+                        </strong></h6>
+                        <h6>Total: <strong> 
+                            Gs. {{ order.get_total_order }}
+                        </strong></h6>
+
+                    </div>
+
+                    <div class="card-element table-responsive">
+                        <table class="table table-condensed">
+
+                            <thead class="text-center">
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Precio</th>
+                                    <th>Cantidad</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in items %}
+                                <tr>
+                                    <td>
+                                        {{ item.producto.nombre }
+                                    </td>
+                                    <td>Gs. {{ item.producto.precio }}
+                                    </td>
+                                    <td>Gs. {{ item.cantidad }}
+                                    </td>
+                                    <td>Gs. {{ item.get_subtotal }}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                    <div class="card-footer mx-auto ">
+                        <a class="btn btn-danger mx-auto mt-0 " href="{% url 'tienda:checkout' %} ">ir a Verificar</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 col-sm-6 my-4 mx-auto animate__animated animate__bounceInUp animate__delay-0.4s ">
+                <div class="card card-footer align-item-center ">
+                    <a href="/ " class="btn btn-dark my-2 mx-auto ">ir a Tienda</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

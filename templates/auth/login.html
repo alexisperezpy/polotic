@@ -1,21 +1,22 @@
 {% extends 'layouts/tienda.html' %} {% load static %} {% block content %}
-<br>
-<div class="container">
-    <div class="col-lg-6 mx-auto my-4">
-        <div class="card-header mt-4 bg-dark">
-            {% load crispy_forms_tags %}
-            <div class="mt-2 text-center ">
-                <h3 class="text-white d-inline-block">Login</h3>
-                <img src="{% static 'assets/user.png' %}" width="50" heigth="50">
-            </div>
-            <div class="card-body py-3">
-                <form class="form-control" method="post" action="">
-                    {% csrf_token %} 
-                    {{ form | crispy }}
-                    <div class="my-3 text-center">
-                        <button class="btn btn-danger" type='submit'>Ingresar</button>
-                    </div>
-                </form>
+<div class="min-vh-100 d-flex flex-colum py-4">
+    <div class="container">
+        <div class="col-lg-6 col-md-6 col-sm-4 mx-auto bg-dark text-white animate__animated animate__bounceInDown animate__delay-0.4s">
+            <div class="card-header">
+                <div class="text-center">
+                    <h3 class="text-white d-inline-block">Login</h3>
+                    <img src="{% static 'assets/user.png' %}" width="50" heigth="50">
+                </div>
+                {% load crispy_forms_tags %}
+                <div class="card-body py-2">
+                    <form method="post" action="">
+                        {% csrf_token %} {{ form | crispy }}
+
+                        <div class="text-center pb-2">
+                            <button class="btn btn-danger" type='submit'>Ingresar</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

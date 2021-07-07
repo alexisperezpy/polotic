@@ -35,7 +35,7 @@
             <a class="navbar-logo" href="/">
                 <img class="img-fluid" src="{% static 'assets/logo2.png' %}" width="50%" heigth="50%" alt="logo">
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                     <li class="nav-item">
@@ -44,9 +44,9 @@
                         </a>
                     </li>
 
-                    <!-- Menú desplegable categorias  xxX no funciona todavia Xxx -->
+                    <!-- Menú desplegable -->
                     <div class="dropdown show">
-                        <a class="btn nav-item dropdown-toggle text-dark" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle text-dark" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Categorias
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -56,12 +56,18 @@
                     </div>
 
                     {% if user.is_staff %}
-
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="/listarproductos">
-                            Productos
-                        </a>
+                                Listado Productos
+                            </a>
                     </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/categorias">
+                                Listado Categorias
+                            </a>
+                    </li>
+
                     {% endif %}
 
                     <li class="nav-item">
@@ -91,13 +97,13 @@
                 <ul class="navbar-nav d-flex ml-auto mb-2 mb-lg-0 ms-lg-4">
                     {% if user.is_authenticated %}
                     <!-- Si está autenticado mostrar -->
-                    <form class="d-flex">
-                        <button class="btn btn-outline-dark" type="submit">
+                    <div class="d-flex">
+                        <a href="{% url 'tienda:cart' %}" class="btn btn-outline-dark">
                             <i class="bi-cart-fill me-1"></i>
-                            
-                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                        </button>
-                    </form>
+
+                            <span class="badge bg-dark text-white ms-1 rounded-pill">Gs. {{ importe_total_carrito }}</span>
+                        </a>
+                    </div>
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#">
                             <b>{{ user.username }}</b>
@@ -112,12 +118,12 @@
                     <!-- Si no está autenticado mostrar -->
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="/login">
-                            Login
+                            Ingresar
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="/registrar">
-                            Registrarme
+                            Registrar
                         </a>
                     </li>
                     {% endif %}
@@ -126,28 +132,44 @@
         </div>
     </nav>
 
-    <section class="container mb-4">
+    <section class="container">
         <!-- CONTENIDO del LAYOUT -->
         {% block content%} {% endblock %}
     </section>
 
     <!-- Footer fixed-bottom-->
-    <footer class="container-fluid  mt-4 py-4 bg-dark">
+    <footer class="container-fluid my-0 pt-3 pb-0 bg-dark">
         <!-- <footer class="navbar fixed-bottom navbar-light bg-dark">-->
         <div class="row">
+            <ul class="col-4 list-unstyled text-center mx-auto my-auto">
+                <h6 class="text-white">Enlaces rápidos</h6>
+                <li class="list-unstyled text-white">
+                    <a href="/garantia" class="stretched-link text-white">Garantía</a></li>
+                <li>
+                    <a href="/devoluciones" class="stretched-link text-white">Devoluciones</a></li>
 
-            <ul class="list-unstyled text-center">
-                <p class="mb-0 text-white text-center">JAGUARETE KAA S.A. 2021 </p>
-                <p class="mb-1 text-white ">Copyright &copy; | All rights Reserved</p>
-
+            </ul>
+            <ul class="col-4 list-unstyled text-center mx-auto my-auto">
+                <img class="img-fluid pb-1 " src="{% static 'assets/logo.png' %}" alt="logo">
+                <p class="font-weight-bold text-white text-center mb-1">JAGUARETE KAA S.A.</p>
+                <!-- <p class="text-white text-center pb-0 mb-0">Avda. Aviadores del Chaco 369 </p>
+                <p class="text-white text-center mb-0">Asunción - Paraguay </p> -->
+            </ul>
+            <ul class="col-4 list-unstyled my-auto mx-auto text-center">
                 {% load bootstrap_icons %}
                 <li>
-                    <a href="#"> <i class="bi bi-facebook"></i> Facebook </a>
+                    <a href="#"> <i class="bi bi-facebook text-white mr-2"></i><span class="badge badge-danger">Facebook</span> </a>
                 </li>
                 <li>
-                    <a href="#"> <i class="bi bi-instagram"></i> Instagram </a>
+                    <a href="#"> <i class="bi bi-instagram text-white mr-2"></i><span class="badge badge-danger">Instagram</span> </a>
+                </li>
+                <li>
+                    <a href="#"> <i class="bi bi-twitter text-white mr-2"></i><span class="badge badge-danger">Twitter</span> </a>
                 </li>
             </ul>
+        </div>
+        <div class="text-center">
+            <p class="pt-2 text-white">Copyright &copy; 2021 | All rights Reserved</p>
         </div>
     </footer>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

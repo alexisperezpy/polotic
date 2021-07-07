@@ -1,20 +1,19 @@
 {% extends 'layouts/tienda.html' %} {% block content %}
-<br>
-<div class="container">
-    <div class="col-6 col-sm-5 offset-md-3 mx-auto bg-dark text-white">
-        <div class="card-header">
-            <h3 class="text-center my-2">Registro de Usuarios</h3>
-            {% load crispy_forms_tags %}
-            <div class="card-body py-2">
-                <form method="post" action="">
-                    {% csrf_token %} 
+<div class="min-vh-100 d-flex flex-colum py-4">
+    <div class="container">
+        <div class="col-lg-6 col-md-6 col-sm-4 mx-auto bg-dark text-white animate__animated animate__bounceInDown animate__delay-0.4s">
+            <div class="card-header">
+                <h3 class="text-center">Registro de Usuarios</h3>
+                {% load crispy_forms_tags %}
+                <div class="card-body py-2">
+                    <form method="post" action="">
+                        {% csrf_token %} {{ form | crispy }}
 
-                    {{ form | crispy }}
-
-                    <div class="text-center py-3">
-                        <button class="btn btn-danger" type='submit'>Registrarse</button>
-                    </div>
-                </form>
+                        <div class="text-center pb-2">
+                            <button class="btn btn-danger" type='submit'>Registrarse</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

@@ -1,0 +1,58 @@
+{% extends 'layouts/tienda.html' %} {% block content %}
+<div class="min-vh-100 d-flex flex-colum py-3">
+    <div class="container-fluid">
+        <h3 class="animate__animated animate__bounceInDown animate__delay-0.3s text-center my-3">CHECKOUT</h3>
+
+        <div class="row">
+            <div class="col-6 mx-auto animate__animated animate__bounceInUp animate__delay-0.4s">
+                <div class="card p-4">
+                    <form method="get" action="">
+                        <h5 class="text-center">
+                            <strong>Información del comprador</strong></h5>
+                        <div class="form-group">
+                            <input id="nombre" class="form-control mb-2 mr-sm-2" type="text" name="nombre" placeholder="{{ user.username }}" readonly>
+                        </div>
+                        <div class="form-group">
+                            <input id="email" class="form-control mb-2 mr-sm-2" type="email" name="email" placeholder="{{ user.email }}" readonly>
+                        </div>
+
+                        <h5 class="text-center"><strong>Información para la Entrega</strong></h5>
+                        <div class="row">
+                            <div class="col">
+                                <input id="ciudad" class="form-control mb-2 mr-sm-1" type="text" name="ciudad" placeholder="Ciudad de entrega">
+                            </div>
+
+                            <div class="col">
+                                <input id="direccion" class="form-control mb-2 mr-sm-1" type="text" name="direccion" placeholder="Dirección de entrega">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <input id="codigo" class="form-control mb-2 mr-sm-1" type="text" name="codigo" placeholder="Código Postal">
+                            </div>
+                            <div class="col">
+                                <input id="telefono" class="form-control mb-2 mr-sm-1" type="text" name="telefono" placeholder="Teléfono de contacto">
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="text-center">
+                            <a class="btn btn-dark" type="submit"> Confirmar Info </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-6 mx-auto animate__animated animate__bounceInUp animate__delay-0.5s ">
+                <div class="card p-4">
+
+                    <a class="btn btn-dark mx-auto my-auto" href="{% url 'tienda:cart' %}"> Volver al carrito </a>
+                    <hr>
+                    <h5 class="mx-auto"><strong>Resumen de la Compra</strong></h5>
+                    <p><strong>Items:{{ order.get_cart_items }}  </strong></p>
+                    <p><strong>Total:{{ order.get_total_order }} </strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
