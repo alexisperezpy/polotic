@@ -255,7 +255,7 @@ def eliminar_producto(request, producto_id):
 def restar_producto(request, producto_id):
     carro = Carro(request)
     producto = Productos.objects.get(id=producto_id)
-    carro.restar_produto(producto=producto)
+    carro.restar(producto=producto)
     return redirect(to="/viewcart")
 
 def cleancart(request):
