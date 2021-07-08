@@ -87,7 +87,7 @@
                     <!-- Si está autenticado mostrar -->
                     {% load humanize %}
                     <div class="d-flex">
-                        <a href="/viewcart" class="btn btn-outline-dark">
+                        <a href="{% url 'tienda:viewcart' %}" class="btn btn-outline-dark">
                             <i class="bi-cart-fill me-1"></i>
                             <span class="badge bg-dark text-white ms-1 rounded-pill">Gs. {{ importe_total_carro | intcomma }}</span>
                         </a>

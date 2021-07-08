@@ -237,30 +237,35 @@ def registrar(request):
 
 # Acciones carrito
 def viewcart(request):
-    carrito = request.session.get('carro')
-    data = {'carro': carrito}
-    return render(request, 'carrito/cart.html', data)
+    return render(request, 'carrito/cart.html', {'carro': request.session['carro']})
 
 def agregar_producto(request, producto_id):
     carro=Carro(request)
     producto=Productos.objects.get(id=producto_id)
     carro.agregar(producto=producto)
-    return redirect('/')
+    return redirect(to="/viewcart")
 
 def eliminar_producto(request, producto_id):
     carro=Carro(request)
     producto=Productos.objects.get(id=producto_id)
     carro.eliminar(producto=producto)
-    return redirect('/')
+    return redirect(to="/viewcart")
 
 
 def restar_producto(request, producto_id):
     carro = Carro(request)
     producto = Productos.objects.get(id=producto_id)
     carro.restar_produto(producto=producto)
-    return redirect('/')
+    return redirect(to="/viewcart")
 
-def limpiar_carro(request):
+def cleancart(request):
     carro=Carro(request)
+    carro.limpiar_carro()
+    return redirect(to="/viewcart")
+
+
+def procesar_compra(request):
+    messages.success(request, 'Gracias por su Compra!!')
+    carro = Carro(request)
     carro.limpiar_carro()
     return redirect('/')

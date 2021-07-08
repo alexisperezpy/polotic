@@ -21,27 +21,27 @@
                             <thead class="text-center">
                                 <tr>
                                     <th>Item</th>
-                                    <th>Precio</th>
-                                    <th>Cantidad</th>
-                                    <th>Total</th>
-                                    <th colspan="2">Opciones</th>
+                                    <th colspan="3">Cantidad</th>
+                                    <th>Subtotal</th>
+                                    <th>Eliminar</th>
                                 </tr>
                             </thead>
                             <tbody class="py-4">
                                 {% if request.session.carro.items %} {% for key, value in request.session.carro.items %}
                                 <tr>
                                     <td>{{ value.nombre }}</td>
-                                    <td> Gs. {{ value.precio }} </td>
+
                                     {% load bootstrap_icons %}
-                                    <td colspan="2">
-                                        <a class="btn btn-secondary btn-sm" href="{% url 'tienda:addcart' value.id %}" type="button"><i class="bi bi-plus"></i></a>
-                                        <a class="btn btn-secondary btn-sm" href="{% url 'tienda:restarcart' value.id %}" type="button"><i class="bi bi-dash"></i></a> {{ value.cantidad }}
+                                    <td class="text-center" colspan="3">
+                                        {{ value.cantidad }}
+                                        <a href="{% url 'tienda:addcart' value.producto_id %}" class="btn btn-secondary btn-sm" type="button"><i class="bi bi-plus"></i></a>
+
+                                        <a class="btn btn-secondary btn-sm" href="{% url 'tienda:restarcart' value.producto_id %}" type="button"><i class="bi bi-dash"></i> </a>
                                     </td>
-                                    <td>
-                                        <a class="btn btn-secondary btn-sm" href="{% url 'tienda:delcart' value.id %}" type="button"><i class="bi bi-trash"></i></a>
-                                    </td>
-                                    <td>
-                                        Gs. subtotal
+
+                                    <td class="text-center">Gs.{{ value.precio }} </td>
+                                    <td class="text-center">
+                                        <a class="btn btn-secondary btn-sm" href="{% url 'tienda:delcart' value.producto_id %}" type="button"><i class="bi bi-trash"></i></a>
                                     </td>
                                 </tr>
                                 {% endfor %} {% else %}
@@ -63,7 +63,7 @@
 
                     <div class="card-footer mx-auto ">
                         {% if request.session.carro.items %}
-                        <a class="btn btn-danger mx-auto mt-0 " href="#">Procesar Compra</a> {% else %}
+                        <a class="btn btn-danger mx-auto mt-0 " href="{% url 'tienda:procesar_compra' %}">Procesar Compra</a> {% else %}
                         <a class="btn btn-danger mx-auto mt-0 disabled" href="#">Procesar Compra</a> {% endif %}
                     </div>
                 </div>
@@ -72,7 +72,7 @@
             <div class="col-lg-3 col-md-4 col-sm-3 my-4 mx-auto animate__animated animate__bounceInUp animate__delay-0.4s ">
                 <div class="card card-footer align-item-center ">
                     <a href="/ " class="btn btn-dark my-2 mx-auto ">Volver a Tienda</a>
-                    <a href="/ " class="btn btn-dark my-2 mx-auto ">Limpiar Carrito</a>
+                    <a href="{% url 'tienda:cleancart' %}" class="btn btn-dark my-2 mx-auto ">Limpiar Carrito</a>
                 </div>
 
             </div>
