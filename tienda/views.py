@@ -1,6 +1,7 @@
 from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from .models import *
+from .carro import Carro
 from django.core.paginator import Paginator
 from django.http import Http404
 from django.contrib.auth import logout, login, authenticate
@@ -235,19 +236,31 @@ def registrar(request):
 
 
 # Acciones carrito
-def cart(request):
-    customer = request.user
-    if request.user.is_authenticated:
-        order, created = Order.objects.get_or_create(cliente=customer, completado=False)
-        items = order.orderitem_set.all()
-    else:
-        items = []
-        order = {'get_total_order':0,
-                 'get_cart_items':0}
-    data={'items':items,
-            'order':order}
-    return render(request, 'carrito/cart.html',data)
+def viewcart(request):
+    carrito = request.session.get('carro')
+    data = {'carro': carrito}
+    return render(request, 'carrito/cart.html', data)
 
-def checkout(request):
-    data={}
-    return render(request, 'carrito/checkout.html',data)
+def agregar_producto(request, producto_id):
+    carro=Carro(request)
+    producto=Productos.objects.get(id=producto_id)
+    carro.agregar(producto=producto)
+    return redirect('/')
+
+def eliminar_producto(request, producto_id):
+    carro=Carro(request)
+    producto=Productos.objects.get(id=producto_id)
+    carro.eliminar(producto=producto)
+    return redirect('/')
+
+
+def restar_producto(request, producto_id):
+    carro = Carro(request)
+    producto = Productos.objects.get(id=producto_id)
+    carro.restar_produto(producto=producto)
+    return redirect('/')
+
+def limpiar_carro(request):
+    carro=Carro(request)
+    carro.limpiar_carro()
+    return redirect('/')

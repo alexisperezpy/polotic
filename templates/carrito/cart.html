@@ -9,56 +9,72 @@
                         <strong>CARRITO</strong>
                     </div>
                     <div class="card body p-2">
-
-                        <h6>Items: <strong> 
-                            {{ order.get_cart_items }} 
-                        </strong></h6>
+                        {% load humanize %}
                         <h6>Total: <strong> 
-                            Gs. {{ order.get_total_order }}
+                            Gs. {{ importe_total_carro | intcomma }}
                         </strong></h6>
 
                     </div>
 
                     <div class="card-element table-responsive">
                         <table class="table table-condensed">
-
                             <thead class="text-center">
                                 <tr>
                                     <th>Item</th>
                                     <th>Precio</th>
                                     <th>Cantidad</th>
                                     <th>Total</th>
+                                    <th colspan="2">Opciones</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                {% for item in items %}
+                            <tbody class="py-4">
+                                {% if request.session.carro.items %} {% for key, value in request.session.carro.items %}
                                 <tr>
+                                    <td>{{ value.nombre }}</td>
+                                    <td> Gs. {{ value.precio }} </td>
+                                    {% load bootstrap_icons %}
+                                    <td colspan="2">
+                                        <a class="btn btn-secondary btn-sm" href="{% url 'tienda:addcart' value.id %}" type="button"><i class="bi bi-plus"></i></a>
+                                        <a class="btn btn-secondary btn-sm" href="{% url 'tienda:restarcart' value.id %}" type="button"><i class="bi bi-dash"></i></a> {{ value.cantidad }}
+                                    </td>
                                     <td>
-                                        {{ item.producto.nombre }
+                                        <a class="btn btn-secondary btn-sm" href="{% url 'tienda:delcart' value.id %}" type="button"><i class="bi bi-trash"></i></a>
                                     </td>
-                                    <td>Gs. {{ item.producto.precio }}
-                                    </td>
-                                    <td>Gs. {{ item.cantidad }}
-                                    </td>
-                                    <td>Gs. {{ item.get_subtotal }}
+                                    <td>
+                                        Gs. subtotal
                                     </td>
                                 </tr>
-                                {% endfor %}
+                                {% endfor %} {% else %}
+                                <tr>
+                                    <td colspan="5">
+                                        <div class="alert alert-danger text-center ">
+
+                                            No se agregaron productos al carrito
+
+                                        </div>
+                                </tr>
+                                </tr>
+                                {% endif %}
+
                             </tbody>
                         </table>
 
                     </div>
 
                     <div class="card-footer mx-auto ">
-                        <a class="btn btn-danger mx-auto mt-0 " href="{% url 'tienda:checkout' %} ">ir a Verificar</a>
+                        {% if request.session.carro.items %}
+                        <a class="btn btn-danger mx-auto mt-0 " href="#">Procesar Compra</a> {% else %}
+                        <a class="btn btn-danger mx-auto mt-0 disabled" href="#">Procesar Compra</a> {% endif %}
                     </div>
                 </div>
             </div>
 
-            <div class="col-lg-3 col-md-6 col-sm-6 my-4 mx-auto animate__animated animate__bounceInUp animate__delay-0.4s ">
+            <div class="col-lg-3 col-md-4 col-sm-3 my-4 mx-auto animate__animated animate__bounceInUp animate__delay-0.4s ">
                 <div class="card card-footer align-item-center ">
-                    <a href="/ " class="btn btn-dark my-2 mx-auto ">ir a Tienda</a>
+                    <a href="/ " class="btn btn-dark my-2 mx-auto ">Volver a Tienda</a>
+                    <a href="/ " class="btn btn-dark my-2 mx-auto ">Limpiar Carrito</a>
                 </div>
+
             </div>
 
         </div>

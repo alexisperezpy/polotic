@@ -13,6 +13,5 @@ class ProductoAdmin(admin.ModelAdmin):
 admin.site.register(Categorias)
 admin.site.register(Productos, ProductoAdmin)
 admin.site.register(Contacto)
-admin.site.register(Order)
-admin.site.register(OrderItem)
+
 

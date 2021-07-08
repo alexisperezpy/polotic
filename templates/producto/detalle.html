@@ -19,10 +19,9 @@
                 <p class="lead">{{ producto.descripcion }}</p>
                 <div class="d-flex">
                     <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" /> {% if user.is_authenticated%}
-                    <button class="btn btn-outline-dark flex-shrink-0" type="button">
-                                <i class="bi-cart-fill me-1"></i>
-                                Agregar al Carrito
-                    </button> {% endif %}
+                    <a href="{% url 'tienda:addcart' producto.id %}" class="btn btn-outline-dark flex-shrink-0" type="button">
+                        <i class="bi-cart-fill me-1"></i> Agregar al Carrito
+                    </a> {% endif %}
                 </div>
             </div>
         </div>
